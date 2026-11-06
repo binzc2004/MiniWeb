@@ -20,11 +20,19 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         try (socket) {
+            log.debug("Handling client connection: {}",
+                    socket.getRemoteSocketAddress());
+
             protocolHandler.handle(socket);
+
         } catch (IOException e) {
-            log.warn("Client connection closed: {}", socket.getRemoteSocketAddress());
+            log.warn("Client connection closed: {}",
+                    socket.getRemoteSocketAddress());
         } catch (Exception e) {
             log.error("Failed to handle client connection", e);
+        } finally {
+            log.debug("Socket connection closed: {}",
+                    socket.getRemoteSocketAddress());
         }
     }
 }
