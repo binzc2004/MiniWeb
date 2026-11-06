@@ -3,6 +3,7 @@ package com.miniweb.server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.miniweb.http.HttpProtocolHandler;
 import com.miniweb.protocol.DefaultProtocolHandler;
 import com.miniweb.protocol.ProtocolHandler;
 
@@ -19,7 +20,7 @@ public class MiniWebServer {
     private final int port;
     private ServerSocket serverSocket;
     //TODO:后续考虑handler怎么传入
-    private ProtocolHandler protocolHandler=new DefaultProtocolHandler();
+    private ProtocolHandler protocolHandler;
 
 
     public MiniWebServer(String host, int port, ProtocolHandler protocolHandler) {

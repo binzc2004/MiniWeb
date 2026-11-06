@@ -49,6 +49,14 @@
                 <release>21</release>
             </configuration>
         </plugin>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.5.1</version>
+            <configuration>
+                <mainClass>com.miniweb.MiniWeb</mainClass>
+            </configuration>
+        </plugin>
     </plugins>
 </build>
 </project>
