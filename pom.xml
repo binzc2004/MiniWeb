@@ -6,52 +6,44 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.miniweb</groupId>
+    <groupId>io.github.binzc2004</groupId>
     <artifactId>miniweb</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>MiniWeb</name>
+    <description>A lightweight Java Web framework built from scratch.</description>
+    <url>https://github.com/binzc2004/MiniWeb</url>
 
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>2.0.20</slf4j.version>
-        <logback.version>1.6.6</logback.version>
     </properties>
 
     <dependencies>
-        <!-- Logging API -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
 
-        <!-- Logging Implementation -->
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-            <scope>runtime</scope>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.20.1</version>
         </dependency>
 
-        <!-- JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.13.4</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Jackson JSON -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.20.1</version>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Java Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -61,21 +53,10 @@
                 </configuration>
             </plugin>
 
-            <!-- JUnit 5 Test Runner -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.4</version>
-            </plugin>
-
-            <!-- Application Runner -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.5.1</version>
-                <configuration>
-                    <mainClass>com.example.Application</mainClass>
-                </configuration>
             </plugin>
         </plugins>
     </build>

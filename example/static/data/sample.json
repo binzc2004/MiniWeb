@@ -1,0 +1,7 @@
+{
+  "application": "MiniWeb Example",
+  "host": "127.0.0.1",
+  "port": 8080,
+  "staticDirectory": "static",
+  "notes": "该 JSON 文件由静态资源处理器直接返回，用于验证非 HTML 文本类静态资源的 MIME 处理。"
+}

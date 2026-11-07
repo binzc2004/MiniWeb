@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniWeb Example</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <h1>MiniWeb</h1>
+    <p class="subtitle">轻量级 Java Web 框架 —— 示例应用</p>
+</header>
+
+<main>
+    <section class="card">
+        <h2>静态资源</h2>
+        <p>当前页面由框架的 <code>StaticResourceHandler</code> 从 <code>static/</code> 目录提供。</p>
+        <p class="hint">样式表与脚本同样是静态资源：<code>/css/style.css</code>、<code>/js/app.js</code></p>
+    </section>
+
+    <section class="card">
+        <h2>接口自检</h2>
+        <p>点击按钮通过 <code>fetch</code> 调用后端接口，验证路由与 JSON 转换。</p>
+        <div class="buttons">
+            <button data-path="/hello">GET /hello</button>
+            <button data-path="/users">GET /users</button>
+            <button data-path="/products">GET /products</button>
+            <button data-path="/stats">GET /stats</button>
+            <button data-path="/ping">GET /ping</button>
+            <button data-path="/diagnostic/request">GET /diagnostic/request</button>
+        </div>
+        <pre id="output">点击上方按钮查看响应…</pre>
+    </section>
+
+    <section class="card">
+        <h2>模块覆盖</h2>
+        <ul>
+            <li>HTTP Server / ClientHandler / Keep-Alive</li>
+            <li>HttpParser / HttpRequest / HttpResponse</li>
+            <li>Router 静态路径 + 动态路径</li>
+            <li>@RestController / @GetMapping / @PostMapping</li>
+            <li>ArgumentResolver / TypeConverter / JsonConverter</li>
+            <li>ReturnValueHandler（String 与 Java 对象）</li>
+            <li>StaticResourceHandler</li>
+        </ul>
+    </section>
+</main>
+
+<footer>
+    <p>MiniWeb Example · 运行于 <span id="clock">--:--:--</span></p>
+</footer>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
