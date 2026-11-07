@@ -2,6 +2,8 @@
 package com.miniweb.http;
 
 import com.miniweb.protocol.ProtocolHandler;
+import com.miniweb.routing.Dispatcher;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +17,16 @@ public class HttpProtocolHandler implements ProtocolHandler {
     private static final Logger log =
             LoggerFactory.getLogger(HttpProtocolHandler.class);
 
-    private final HttpParser parser = new HttpParser();
+    private final HttpParser parser;
+    private final Dispatcher dispatcher;
+    public HttpProtocolHandler(Dispatcher dispatcher) {
+        if (dispatcher == null) {
+            throw new IllegalArgumentException("Dispatcher cannot be null");
+        }
+
+        this.parser = new HttpParser();
+        this.dispatcher = dispatcher;
+    }
 
     @Override
     public void handle(Socket socket) throws IOException {
@@ -37,10 +48,9 @@ public class HttpProtocolHandler implements ProtocolHandler {
                     request.getMethod(), request.getPath());
 
             // 2. 请求分发
-            // TODO: Dispatcher.dispatch(request)
+            HttpResponse response=this.dispatcher.dispatch(request);
 
-            // 3. 测试 Hook：临时模拟 Dispatcher 返回响应
-            HttpResponse response = testResponseHook(request);
+        
 
             // 4. 根据 HTTP 版本和 Connection 请求头判断是否保持连接
             boolean keepAlive = shouldKeepAlive(request);
