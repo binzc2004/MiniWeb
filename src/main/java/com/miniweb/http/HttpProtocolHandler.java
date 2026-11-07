@@ -7,6 +7,7 @@ import com.miniweb.routing.Dispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.miniweb.MiniWeb;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,11 +15,11 @@ import java.net.Socket;
 
 public class HttpProtocolHandler implements ProtocolHandler {
 
-    private static final Logger log =
-            LoggerFactory.getLogger(HttpProtocolHandler.class);
+    private static final Logger log = MiniWeb.getLogger(HttpProtocolHandler.class);
 
     private final HttpParser parser;
     private final Dispatcher dispatcher;
+
     public HttpProtocolHandler(Dispatcher dispatcher) {
         if (dispatcher == null) {
             throw new IllegalArgumentException("Dispatcher cannot be null");
@@ -44,13 +45,13 @@ public class HttpProtocolHandler implements ProtocolHandler {
                 break;
             }
 
-            log.info("Received HTTP request: {} {}",
-                    request.getMethod(), request.getPath());
+            log.info("Client {} requested: {} {}",
+                    socket.getRemoteSocketAddress(),
+                    request.getMethod(),
+                    request.getPath());
 
             // 2. 请求分发
-            HttpResponse response=this.dispatcher.dispatch(request);
-
-        
+            HttpResponse response = this.dispatcher.dispatch(request);
 
             // 4. 根据 HTTP 版本和 Connection 请求头判断是否保持连接
             boolean keepAlive = shouldKeepAlive(request);
@@ -76,8 +77,7 @@ public class HttpProtocolHandler implements ProtocolHandler {
                 "HTTP/1.1",
                 HttpStatus.OK,
                 java.util.Map.of("Content-Type", "text/plain; charset=UTF-8"),
-                body
-        );
+                body);
     }
 
     /**
@@ -105,8 +105,7 @@ public class HttpProtocolHandler implements ProtocolHandler {
     private void writeResponse(
             OutputStream output,
             HttpResponse response,
-            boolean keepAlive
-    ) throws IOException {
+            boolean keepAlive) throws IOException {
 
         byte[] body = response.getBody();
 
@@ -119,12 +118,10 @@ public class HttpProtocolHandler implements ProtocolHandler {
                 .append(response.getStatus().getReasonPhrase())
                 .append("\r\n");
 
-        response.getHeaders().forEach((name, value) ->
-                header.append(name)
-                        .append(": ")
-                        .append(value)
-                        .append("\r\n")
-        );
+        response.getHeaders().forEach((name, value) -> header.append(name)
+                .append(": ")
+                .append(value)
+                .append("\r\n"));
 
         header.append("Content-Length: ")
                 .append(body.length)
@@ -137,8 +134,7 @@ public class HttpProtocolHandler implements ProtocolHandler {
         header.append("\r\n");
 
         output.write(header.toString().getBytes(
-                java.nio.charset.StandardCharsets.ISO_8859_1
-        ));
+                java.nio.charset.StandardCharsets.ISO_8859_1));
 
         output.write(body);
         output.flush();

@@ -8,6 +8,7 @@ import com.miniweb.routing.RouteHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.miniweb.MiniWeb;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 public class HandlerMethod implements RouteHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(HandlerMethod.class);
+    private static final Logger log = MiniWeb.getLogger(HandlerMethod.class);
 
     private final Object controller;
     private final Method method;

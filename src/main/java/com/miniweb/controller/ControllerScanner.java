@@ -1,6 +1,7 @@
 
 package com.miniweb.controller;
 
+import com.miniweb.MiniWeb;
 import com.miniweb.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +28,7 @@ import java.util.stream.Stream;
  */
 public class ControllerScanner {
 
-    private static final Logger log =
-            LoggerFactory.getLogger(ControllerScanner.class);
+    private static final Logger log = MiniWeb.getLogger(ControllerScanner.class);
 
     private final String basePackage;
     private final ClassLoader classLoader;
@@ -36,13 +36,11 @@ public class ControllerScanner {
     public ControllerScanner(String basePackage) {
         if (basePackage == null || basePackage.isBlank()) {
             throw new IllegalArgumentException(
-                    "Base package cannot be empty"
-            );
+                    "Base package cannot be empty");
         }
 
         this.basePackage = basePackage;
-        this.classLoader = Thread.currentThread().getContextClassLoader()
-                != null
+        this.classLoader = Thread.currentThread().getContextClassLoader() != null
                 ? Thread.currentThread().getContextClassLoader()
                 : ControllerScanner.class.getClassLoader();
     }
@@ -56,8 +54,7 @@ public class ControllerScanner {
         String packagePath = basePackage.replace('.', '/');
 
         try {
-            Enumeration<URL> resources =
-                    classLoader.getResources(packagePath);
+            Enumeration<URL> resources = classLoader.getResources(packagePath);
 
             while (resources.hasMoreElements()) {
                 URL resource = resources.nextElement();
@@ -71,15 +68,13 @@ public class ControllerScanner {
         } catch (IOException | URISyntaxException e) {
             throw new IllegalStateException(
                     "Failed to scan package: " + basePackage,
-                    e
-            );
+                    e);
         }
 
         log.debug(
                 "Controller scanning completed, found {} controllers in {}",
                 controllers.size(),
-                basePackage
-        );
+                basePackage);
 
         return Collections.unmodifiableSet(controllers);
     }
@@ -89,8 +84,7 @@ public class ControllerScanner {
      */
     private void scanDirectory(
             URL resource,
-            Set<Class<?>> controllers
-    ) throws IOException, URISyntaxException {
+            Set<Class<?>> controllers) throws IOException, URISyntaxException {
         Path directory = Paths.get(resource.toURI());
 
         if (!Files.isDirectory(directory)) {
@@ -109,8 +103,7 @@ public class ControllerScanner {
                         String className = basePackage + "."
                                 + relativePath.substring(
                                         0,
-                                        relativePath.length() - 6
-                                );
+                                        relativePath.length() - 6);
 
                         addController(className, controllers);
                     });
@@ -123,10 +116,8 @@ public class ControllerScanner {
     private void scanJar(
             URL resource,
             String packagePath,
-            Set<Class<?>> controllers
-    ) throws IOException {
-        JarURLConnection connection =
-                (JarURLConnection) resource.openConnection();
+            Set<Class<?>> controllers) throws IOException {
+        JarURLConnection connection = (JarURLConnection) resource.openConnection();
 
         connection.setUseCaches(false);
 
@@ -157,8 +148,7 @@ public class ControllerScanner {
      */
     private void addController(
             String className,
-            Set<Class<?>> controllers
-    ) {
+            Set<Class<?>> controllers) {
         if (className.endsWith("package-info")
                 || className.endsWith("module-info")) {
             return;
@@ -168,8 +158,7 @@ public class ControllerScanner {
             Class<?> clazz = Class.forName(
                     className,
                     false,
-                    classLoader
-            );
+                    classLoader);
 
             if (clazz.isAnnotationPresent(RestController.class)) {
                 controllers.add(clazz);
@@ -179,8 +168,7 @@ public class ControllerScanner {
         } catch (ClassNotFoundException | LinkageError e) {
             throw new IllegalStateException(
                     "Failed to load class: " + className,
-                    e
-            );
+                    e);
         }
     }
 }

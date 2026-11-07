@@ -4,6 +4,7 @@ package com.miniweb.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.miniweb.MiniWeb;
 /**
  * Java 基础类型转换器。
  *
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TypeConverter {
 
-    private static final Logger log = LoggerFactory.getLogger(TypeConverter.class);
+    private static final Logger log = MiniWeb.getLogger(TypeConverter.class);
 
     /**
      * 将字符串转换为指定 Java 类型。

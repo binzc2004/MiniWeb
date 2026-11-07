@@ -74,7 +74,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
-                    <mainClass>com.miniweb.MiniWeb</mainClass>
+                    <mainClass>com.example.Application</mainClass>
                 </configuration>
             </plugin>
         </plugins>

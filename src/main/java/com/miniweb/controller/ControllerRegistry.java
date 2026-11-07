@@ -1,6 +1,7 @@
 
 package com.miniweb.controller;
 
+import com.miniweb.MiniWeb;
 import com.miniweb.annotation.GetMapping;
 import com.miniweb.annotation.PostMapping;
 import com.miniweb.http.HttpMethod;
@@ -22,7 +23,7 @@ import java.util.Set;
  */
 public class ControllerRegistry {
 
-    private static final Logger log = LoggerFactory.getLogger(ControllerRegistry.class);
+    private static final Logger log = MiniWeb.getLogger(ControllerRegistry.class);
 
     private final Router router;
     private final ArgumentResolver argumentResolver;

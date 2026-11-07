@@ -6,6 +6,7 @@ import com.miniweb.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.miniweb.MiniWeb;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 public class ReturnValueHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(ReturnValueHandler.class);
+    private static final Logger log = MiniWeb.getLogger(ReturnValueHandler.class);
 
     private final JsonConverter jsonConverter;
 

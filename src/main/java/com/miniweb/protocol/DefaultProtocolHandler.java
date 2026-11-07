@@ -8,19 +8,18 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+import com.miniweb.MiniWeb;
 public class DefaultProtocolHandler implements ProtocolHandler {
-    private static final Logger log = LoggerFactory.getLogger(DefaultProtocolHandler.class);
+    private static final Logger log = MiniWeb.getLogger(DefaultProtocolHandler.class);
 
- 
-    
     @Override
     public void handle(Socket socket) throws Exception {
         byte[] buffer = new byte[1024];
         int length;
         byte[] test = "你好，MiniWeb！".getBytes(StandardCharsets.UTF_8);
-String decoded = new String(test, StandardCharsets.UTF_8);
+        String decoded = new String(test, StandardCharsets.UTF_8);
 
-System.out.println("UTF-8 TEST: " + decoded);
+        System.out.println("UTF-8 TEST: " + decoded);
         while ((length = socket.getInputStream().read(buffer)) != -1) {
             byte[] received = java.util.Arrays.copyOf(buffer, length);
 
